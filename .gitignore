@@ -1,0 +1,44 @@
+# --- BASE DE DATOS (DOCKER) ---
+# Ignora la carpeta local donde Postgres guarda las tablas físicamente
+data/
+postgres_data/
+
+# --- BACKEND (PYTHON / FASTAPI) ---
+# Archivos de configuración locales y cachés de Python
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.env
+
+# --- FRONTEND (REACT / NODE) ---
+# Ignora la carpeta gigante de librerías de React (cada quien la genera con npm install)
+**/node_modules/
+fr  ontend/dist/
+frontend/.env.local
+
+#--- Logs ---
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
