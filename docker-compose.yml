@@ -1,29 +1,30 @@
-version: '3.8'
-
 services:
-
   db:
     image: postgres:18
     container_name: Desarrollo
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mi_base_local
     ports:
       - "5432:5432"
     volumes:
       - ./data/postgres:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   backend:
-    build: ./server-fastapi # <-- Le dice a Docker que busque el Dockerfile aquí
+    build: ./server-fastapi
     container_name: server-fastapi
     ports:
       - "8000:8000"
     volumes:
-      - ./server-fastapi:/app  # <-- Sincroniza tu código para que los cambios se vean en vivo
+      - ./server-fastapi:/app
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/mi_base_local
     depends_on:
-      - db
-
-volumes:
-  postgres_data:
+      db:
+        condition: service_healthy    # ← espera a que db esté sano
