@@ -1,15 +1,27 @@
 # main.py
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from app.database import engine
 from app import models
-from app.routers import facturas, estadisticas
+from app.routers import menu, pedidos, facturas, estadisticas, usuarios
 
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.include_router(menu.router,         prefix="/api")
+app.include_router(pedidos.router,      prefix="/api")
 app.include_router(facturas.router,     prefix="/api")
 app.include_router(estadisticas.router, prefix="/api")
+app.include_router(usuarios.router,     prefix="/api")
 
 @app.get("/")
 def root():

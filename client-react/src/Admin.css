@@ -1,0 +1,274 @@
+.admin-layout {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background: #f2ede9;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 60px;
+  background: #2c2420;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.admin-header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.admin-usuario { font-size: 14px; opacity: .85; }
+
+.btn-logout-admin {
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.25);
+  color: #fff;
+  padding: 5px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+.btn-logout-admin:hover { background: rgba(255,255,255,.2); }
+
+.admin-tabs {
+  display: flex;
+  background: #fff;
+  border-bottom: 1px solid #e4ddd7;
+  padding: 0 24px;
+}
+
+.tab-btn {
+  padding: 14px 20px;
+  border: none;
+  background: none;
+  font-size: 15px;
+  font-weight: 600;
+  color: #7a6e68;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: color .15s, border-color .15s;
+}
+.tab-btn:hover { color: #2c2420; }
+.tab-btn.activa { color: #c8452a; border-bottom-color: #c8452a; }
+
+.admin-main {
+  flex: 1;
+  padding: 24px;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.tab-titulo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.tab-titulo h3 { font-size: 20px; font-weight: 700; color: #2c2420; margin: 0; }
+
+.btn-recargar-admin {
+  background: #fff;
+  border: 1.5px solid #e4ddd7;
+  border-radius: 8px;
+  padding: 7px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #2c2420;
+}
+.btn-recargar-admin:hover { border-color: #c8452a; color: #c8452a; }
+
+.facturas-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 16px;
+}
+
+.factura-card {
+  background: #fff;
+  border: 1.5px solid #e4ddd7;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.factura-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: #fdfaf8;
+  border-bottom: 1px solid #e4ddd7;
+}
+.factura-mesa { font-size: 17px; font-weight: 700; }
+.factura-id { font-size: 12px; color: #7a6e68; }
+
+.factura-items {
+  list-style: none;
+  padding: 12px 16px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.factura-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #2c2420;
+}
+
+.factura-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-top: 1px solid #e4ddd7;
+}
+.factura-total { font-size: 14px; }
+.factura-total strong { color: #c8452a; font-size: 16px; }
+
+.btn-facturar {
+  padding: 8px 16px;
+  background: #2c2420;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity .15s;
+}
+.btn-facturar:hover:not(:disabled) { opacity: .85; }
+.btn-facturar:disabled { opacity: .5; cursor: not-allowed; }
+
+/* Factura generada */
+.factura-vista {
+  background: #fff;
+  border: 1.5px solid #e4ddd7;
+  border-radius: 14px;
+  padding: 28px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+.factura-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.factura-header h3 { font-size: 20px; margin: 0; }
+.factura-fecha { font-size: 13px; color: #7a6e68; }
+.factura-pedido { font-size: 13px; color: #7a6e68; margin-bottom: 20px; }
+.factura-total-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fdfaf8;
+  border: 1px solid #e4ddd7;
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+.factura-total-box strong { font-size: 24px; color: #c8452a; }
+.btn-volver {
+  background: none;
+  border: 1.5px solid #e4ddd7;
+  border-radius: 8px;
+  padding: 9px 18px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #2c2420;
+}
+.btn-volver:hover { border-color: #c8452a; color: #c8452a; }
+
+/* Estadísticas */
+.estadisticas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.stat-card {
+  background: #fff;
+  border: 1.5px solid #e4ddd7;
+  border-radius: 14px;
+  padding: 20px 24px;
+}
+.stat-card.full { grid-column: 1 / -1; }
+.stat-card h3 { font-size: 16px; font-weight: 700; color: #2c2420; margin: 0 0 16px; }
+
+.stat-valores { display: flex; gap: 24px; flex-wrap: wrap; }
+.stat-valor { display: flex; flex-direction: column; gap: 4px; }
+.stat-num { font-size: 28px; font-weight: 700; color: #2c2420; }
+.stat-valor.destacado .stat-num { color: #c8452a; }
+.stat-label { font-size: 12px; color: #7a6e68; }
+
+.mes-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.mes-selector select, .mes-selector input {
+  padding: 8px 12px;
+  border: 1.5px solid #e4ddd7;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  background: #fdfaf8;
+  color: #2c2420;
+}
+.mes-selector input { width: 90px; }
+.btn-consultar {
+  padding: 8px 16px;
+  background: #c8452a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn-consultar:hover { background: #9e3420; }
+
+.productos-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.productos-tabla th {
+  text-align: left;
+  padding: 10px 12px;
+  background: #fdfaf8;
+  border-bottom: 2px solid #e4ddd7;
+  color: #7a6e68;
+  font-weight: 600;
+}
+.productos-tabla td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e4ddd7;
+  color: #2c2420;
+}
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+.admin-vacio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 60px 0;
+  color: #7a6e68;
+}
+.admin-vacio span { font-size: 40px; color: #2e7d4f; }
+.admin-vacio p { font-size: 16px; margin: 0; }
+.admin-cargando { color: #7a6e68; text-align: center; padding: 40px 0; }

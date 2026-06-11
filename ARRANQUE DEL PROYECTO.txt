@@ -1,0 +1,17 @@
+ARRANQUE DEL PROYECTO
+─────────────────────
+1. Abrir Docker Desktop y esperar que cargue (ballena en la barra de tareas)
+
+2. Abrir PowerShell como administrador y ejecutar:
+   docker start postgres-restaurante
+
+3. Abrir terminal normal en la carpeta del backend:
+   cd C:\Users\your-name\Desktop\Desarrollo_1\server-fastapi
+   python -m uvicorn app.main:app --reload
+
+4. Abrir otra terminal en la carpeta del frontend:
+   cd C:\Users\your-name\Desktop\Desarrollo_1\client-react
+   npm run dev
+
+5. Abrir navegador en:
+   http://localhost:5173

@@ -1,0 +1,9 @@
+URLS
+
+MENÚ: http://localhost:5173/
+LOGIN: http://localhost:5173/login
+MESERO: http://localhost:5173/mesero
+MESA (por defecto) = http://localhost:5173/
+CADA MESA: http://localhost:5173/?mesa=2 (cambiar numero final para cada mesa)
+COCINA: http://localhost:5173/cocina
+ADMIN: http://localhost:5173/admin
