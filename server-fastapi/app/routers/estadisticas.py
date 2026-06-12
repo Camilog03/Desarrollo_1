@@ -7,48 +7,74 @@ from datetime import date
 
 router = APIRouter()
 
+# ─── GET: Ventas diarias ────────────────────────────
 @router.get("/estadisticas/ventas-diarias")
 def ventas_diarias(db: Session = Depends(get_db)):
+
     hoy = date.today()
-    facturas_hoy = db.query(models.Factura).filter(
+
+    # Buscar facturas generadas hoy
+    cantidad_ventas, total_recaudado = db.query(
+        func.count(models.Factura.id),
+        func.coalesce(func.sum(models.Factura.total), 0.0),
+    ).filter(
         func.date(models.Factura.fecha) == hoy
-    ).all()
-    total_ventas = sum(f.total for f in facturas_hoy)
+    ).one()
+
     return {
         "fecha": str(hoy),
-        "cantidad_ventas": len(facturas_hoy),
-        "total_recaudado": total_ventas
+        "cantidad_ventas": cantidad_ventas,
+        "total_recaudado": total_recaudado
     }
 
+
+# ─── GET: Ventas por producto ───────────────────────
 @router.get("/estadisticas/ventas-producto")
 def ventas_por_producto(db: Session = Depends(get_db)):
-    productos = db.query(models.Producto).all()
-    resultado = []
-    for producto in productos:
-        detalles = db.query(models.DetallePedido).filter(
-            models.DetallePedido.id_producto == producto.id
-        ).all()
-        cantidad_total = sum(d.cantidad for d in detalles)
-        ingresos = cantidad_total * producto.precio
-        resultado.append({
-            "id_producto": producto.id,
-            "nombre": producto.nombre,
-            "cantidad_vendida": cantidad_total,
-            "ingresos_generados": ingresos
-        })
-    resultado.sort(key=lambda x: x["cantidad_vendida"], reverse=True)
-    return resultado
 
+    # Traer todos los productos
+    filas = (
+        db.query(
+            models.Producto.id.label("id_producto"),
+            models.Producto.nombre.label("nombre"),
+            func.sum(models.DetallePedido.cantidad).label("cantidad_vendida"),
+            func.sum(models.DetallePedido.cantidad * models.Producto.precio).label("ingresos_generados"),
+        )
+        .join(models.DetallePedido, models.DetallePedido.id_producto == models.Producto.id)
+        .join(models.Pedido, models.Pedido.id == models.DetallePedido.id_pedido)
+        .join(models.Factura, models.Factura.id_pedido == models.Pedido.id)
+        .group_by(models.Producto.id, models.Producto.nombre)
+        .order_by(func.sum(models.DetallePedido.cantidad).desc())
+        .all()
+    )
+
+    return [
+        {
+            "id_producto": f.id_producto,
+            "nombre": f.nombre,
+            "cantidad_vendida": int(f.cantidad_vendida),
+            "ingresos_generados": float(f.ingresos_generados),
+        }
+        for f in filas
+    ]
+
+
+# ─── GET: Ganancias por mes ─────────────────────────
 @router.get("/estadisticas/ganancias-mes")
 def ganancias_por_mes(mes: int, anio: int, db: Session = Depends(get_db)):
-    facturas_mes = db.query(models.Factura).filter(
+
+    # Filtrar facturas por mes y año
+    cantidad_ventas, total_ganancias = db.query(
+        func.count(models.Factura.id),
+        func.coalesce(func.sum(models.Factura.total), 0.0),
+    ).filter(
         func.extract("month", models.Factura.fecha) == mes,
-        func.extract("year", models.Factura.fecha) == anio
-    ).all()
-    total_ganancias = sum(f.total for f in facturas_mes)
+        func.extract("year", models.Factura.fecha) == anio,
+    ).one()
+
     return {
         "mes": mes,
         "anio": anio,
-        "cantidad_ventas": len(facturas_mes),
+        "cantidad_ventas": cantidad_ventas,
         "total_ganancias": total_ganancias
     }
